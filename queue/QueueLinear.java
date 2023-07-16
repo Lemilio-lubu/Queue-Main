@@ -1,19 +1,14 @@
-import java.util.Arrays;
+package queue;
 
-public class QueueM {
-    private int sizeQueue;
-    private int front;
-    private int rear;
-    private String[] queue;
+public class QueueLinear extends QueueM {
+    private final int sizeQueueL;
 
-    public QueueM(int sizeQueue) {
-        this.sizeQueue = sizeQueue;
-        this.front = -1; //pointer item from delete element
-        this.rear = -1; //pointer item from insert element
-        this.queue = new String[sizeQueue]; //string queue
+    public QueueLinear(int sizeQueue) {
+        super(sizeQueue);
+        this.sizeQueueL = sizeQueue;
     }
 
-
+    @Override
     public void enqueue(String element) {
         //check is full
         if (isFull()) {
@@ -31,15 +26,13 @@ public class QueueM {
         rear += 1;
         queue[rear] = element;
     }
-
+    private boolean isFull() {
+        return front == 0 && rear == sizeQueueL - 1;
+    }
     private boolean isFirstElement() {
         return front == -1 && rear == -1;
     }
-
-    private boolean isFull() {
-        return front == 0 && rear == sizeQueue - 1;
-    }
-
+    @Override
     public void dequeue() {
         //check if queue is empty
         if (isEmpty()) {
@@ -57,17 +50,12 @@ public class QueueM {
         modifyQueue();
         rear--; // decrease rear queue
 
-
     }
+
 
     private boolean isLastElement() {
         return front == rear;
     }
-
-    private boolean isEmpty() {
-        return front == -1 && rear == -1;
-    }
-
     private void modifyQueue() {
         //add auxiliar value that keeps value of front
         int auxValue = front;
@@ -81,23 +69,5 @@ public class QueueM {
             queue[auxValue] = element;
             auxValue++;
         }
-    }
-
-    public void peek() {
-        //show the elements using FIFO principle
-        if (!isEmpty()) {
-            System.out.println(queue[front]);
-            return;
-        }
-        System.out.println("queue empty");
-    }
-
-    @Override
-    public String toString() {
-        String report = "**********QUEUE****************\n[";
-        for (String element : queue) {
-            report += element + " ,";
-        }
-        return report + "]\n";
     }
 }
